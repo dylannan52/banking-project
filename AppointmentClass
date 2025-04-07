@@ -1,0 +1,26 @@
+import java.util.*;
+
+class Appointment {
+  private string appointmentDate;
+  private int appointmentTime;
+  private int customerID;
+  protected Scanner keyboard = new Scanner();
+
+  void setAppointment(appointmentDate, appointmentTime, customerID) {
+    System.out.println("What day would you like your appointment to be? ");
+    appointmentDate = keyboard.next();
+    validDate = validateAppointmentDate(appointmentDate);
+
+    if(!validDate) {
+      
+    }
+  }
+
+  boolean validateAppointmentDate(appointmentDate) {
+	  if(appointmentDate < currentDate) { //Appointment cannot be made in the past
+		  return false;
+	  }
+	return true;
+}
+
+}
