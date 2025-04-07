@@ -1,0 +1,88 @@
+public class Accounts {
+    
+    private String username;
+    private String password;
+    private int pin_number;
+    private String email;
+    protected int account_num;
+    protected int routing_num;
+    protected String name;
+    protected String address;
+    protected int zip;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getPin_number() {
+        return pin_number;
+    }
+
+    public void setPin_number(int pin_number) {
+        this.pin_number = pin_number;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getAccount_num() {
+        return account_num;
+    }
+
+    public void setAccount_num(int account_num) {
+        this.account_num = account_num;
+    }
+
+    public int getRouting_num() {
+        return routing_num;
+    }
+
+    public void setRouting_num(int routing_num) {
+        this.routing_num = routing_num;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getZip() {
+        return zip;
+    }
+
+    public void setZip(int zip) {
+        this.zip = zip;
+    }
+    
+    
+    
+    
+}
