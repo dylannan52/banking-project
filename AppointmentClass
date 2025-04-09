@@ -2,11 +2,13 @@ import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException
+import java.time.format.DateTimeParseException;
 
 class Appointment {
   private string appointmentDate;
-  private int appointmentTime;
+  private string selectedDate;
+  private string appointmentTime;
+  private string selectedTime;
   private int customerID;
   protected Scanner keyboard = new Scanner();
 
@@ -30,6 +32,9 @@ class Appointment {
 		appointmentTime = keyboard.nextInt();
 		keyboard.ignore();
 	}
+
+	selectedDate = appointmentDate;
+	selectedTime = appointmentTime;
   }
 
   boolean validateAppointmentDate(appointmentDate) {
@@ -68,5 +73,12 @@ class Appointment {
 			return false;
 		}
 		return true;
+	}
+
+	boolen checkAvailability(appointmentTime,appointmentDate) {
+		if(selectedTime.equals(appointmentTime) && selectedDate.equals(appointmentDate) && ) {
+			return true;
+		}
+		return false;
 	}
 }
