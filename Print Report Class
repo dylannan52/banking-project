@@ -1,1 +1,18 @@
 //This class will print the report
+
+public class PrintReport{
+int reportID
+String reportType;
+String dateGenerated;
+
+public void generateReport(int reportID){
+  this.report = reportID;
+
+System.out.println("Generating report for Report ID: " + reportID);
+System.out.println("Report Typer: " + reportType);
+
+System.out.println("Date Generated: " + dateGenerated)
+
+}
+
+}
