@@ -32,9 +32,6 @@ class Appointment {
 		appointmentTime = keyboard.nextInt();
 		keyboard.ignore();
 	}
-
-	selectedDate = appointmentDate;
-	selectedTime = appointmentTime;
   }
 
   boolean validateAppointmentDate(appointmentDate) {
@@ -74,11 +71,12 @@ class Appointment {
 		}
 		return true;
 	}
-
+	/*
 	boolen checkAvailability(appointmentTime,appointmentDate) {
-		if(selectedTime.equals(appointmentTime) && selectedDate.equals(appointmentDate) && ) {
+		if() {
 			return true;
 		}
 		return false;
 	}
+	*/
 }
