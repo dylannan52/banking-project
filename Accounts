@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Accounts {
     
     private String username;
@@ -82,7 +84,81 @@ public class Accounts {
         this.zip = zip;
     }
     
+    public void changePassword() {
+        Scanner scanner = new Scanner(System.in);
     
+        
+        System.out.println("Enter your current password: ");
+        String input = scanner.nextLine();
+        String current = this.password;
+        
+       
+        while(!current.equals(input)) //if the input and current password don't match
+        {
+            System.out.println("That is not the correct password. Please try again.");
+            input = scanner.nextLine();
+        }
+        
+        System.out.println("Enter your new password: ");
+        String newInput = scanner.nextLine();
+        this.password = newInput;
+        System.out.println("Password successfully changed.");
+    }
+       
+    
+    
+    public void changePIN() {
+        Scanner scanner = new Scanner(System.in);
+    
+        
+        System.out.println("Enter your current PIN: ");
+        int input = scanner.nextInt();
+        
+        int number = 12345;
+        int digits = String.valueOf(Math.abs(number)).length();
+        
+        while(digits != 4) {
+            System.out.println("The PIN must be 4 digits long.");
+            input = scanner.nextInt();
+        }
+        
+        int current = this.pin_number;
+        
+       
+        while(input != current) //if the input and current password don't match
+        {
+            System.out.println("That is not the correct password. Please try again.");
+            input = scanner.nextInt();
+        }
+        
+        System.out.println("Enter your new PIN: ");
+        int newInput = scanner.nextInt();
+        this.pin_number = newInput;
+        System.out.println("PIN successfully changed.");
+        
+    }
+    
+    public void changeEmail() {
+        Scanner scanner = new Scanner(System.in);
+    
+        
+        System.out.println("Enter your current email: ");
+        String input = scanner.nextLine();
+        String current = this.email;
+        
+       
+        while(!current.equals(input)) //if the input and current password don't match
+        {
+            System.out.println("That is not the correct email. Please try again.");
+            input = scanner.nextLine();
+        }
+        
+        System.out.println("Enter your new email: ");
+        String newInput = scanner.nextLine();
+        this.email = newInput;
+        System.out.println("Email successfully changed.");
+    }
+
     
     
 }
