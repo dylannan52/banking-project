@@ -1,4 +1,8 @@
-import java.util.*;
+import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException
 
 class Appointment {
   private string appointmentDate;
@@ -11,16 +15,58 @@ class Appointment {
     appointmentDate = keyboard.next();
     validDate = validateAppointmentDate(appointmentDate);
 
-    if(!validDate) {
-      
+    while(!validDate) {
+	System.out.println("Invalid Date. Please enter a valid date: ")
+	appointmentDate = keyboard.next();
+	keyboard.ignore();
     }
+
+	System.out.println("What time would you like your appointment to be? ");
+	appointmentTime = keyboard.nextInt();
+	validTime = validateAppointmentTime(appointmentTime);
+
+	while(!validTime) {
+		System.out.println("Invalid Time. Please enter a valid time: ");
+		appointmentTime = keyboard.nextInt();
+		keyboard.ignore();
+	}
   }
 
   boolean validateAppointmentDate(appointmentDate) {
-	  if(appointmentDate < currentDate) { //Appointment cannot be made in the past
-		  return false;
-	  }
+	LocalDate currentDate = LocalDate.now();
+	DateFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
+	try
+	{
+		LocalDate date = LocalDate.parse(appointmentDate, format);
+		if(date.isBefore(currentDate)) {
+			return false;
+		}
+	}
+	catch(DateTimeParseException e)
+	{
+		e.getMessage();
+		return false;
+	}
 	return true;
 }
 
+	boolean validateAppointmentTime(appointmentTime) {
+		LocalTime currentTime = LocalTime.now();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm a");
+
+		try
+		{
+			LocalTime time = LocalTime.parse(appointmentTime, format);
+			if(date.isBefore(currentTime)) {
+				return false;
+			}
+		}
+		catch(DateTimeParseException e)
+		{
+			e.getMessage();
+			return false;
+		}
+		return true;
+	}
 }
