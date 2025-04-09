@@ -1,0 +1,22 @@
+//This code will handle the user interface
+import java.awt.*;
+
+class UI {
+  void clearScreen() {
+  }
+
+  void displayMenu() {
+  }
+
+  void displayCustomerMenu() {
+  }
+
+  void displayAdminMenu() {
+  }
+
+  void displayTransactionsMenu() {
+  }
+
+  void pressEnter() {
+  }
+}
