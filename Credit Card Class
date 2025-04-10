@@ -1,1 +1,19 @@
 //This wil contain credit card information
+
+class CreditCard
+{
+    private int cardNumber;
+    private String cardHolder;
+    private int cvc;
+    private String expirationDate;
+    private double cardBalance;
+
+    CreditCard()
+    {
+      cardNumber = 1234567891011213;
+      cardHolder = "";
+      cvc = 123;
+      expirationDate = "";
+      cardBalance = 00.00;
+    }
+}
