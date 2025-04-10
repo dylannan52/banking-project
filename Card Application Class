@@ -1,1 +1,35 @@
 //This will contain the details of the application for credit cards
+
+public class CardApplication{
+  String applicationName;
+  int applicationID;
+  int applicationSSN;
+
+public void cardAppMenu(){
+  System.out.println("Credit Card Application");
+}
+
+public void setAppName(String name){
+        applicationName = name;
+}
+ public void setAppID(int id) {
+        applicationID = id;
+}
+
+public void setAppSSN(int ssn) {
+        applicantSSN = ssn;
+}
+
+public String getAppName() {
+        return applicantName;
+}
+
+public int getAppID() {
+        return applicationID;
+}
+
+public int getAppSSN() {
+        return applicantSSN;
+}
+
+}
