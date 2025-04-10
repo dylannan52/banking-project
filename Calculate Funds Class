@@ -1,1 +1,27 @@
 //This will calculate the currency left in the account (withdrawals, deposits)
+
+public class CalculateFunds{
+  double currentBalance;
+  double depositAmount;
+  double withdrawalAmount;
+
+public CalculateFunds(double startingBalance){
+  this.currentBalance = startingBalance;
+}
+
+public void setDepositAmount(double amount){
+  depositAmount = amount;
+}
+
+public void setWithdrawalAmount(double amount){
+  withdrawalAmount = amount;
+}
+
+//Calculate return balance
+public double calculate(){
+  currentBalance += depositAmount;
+  currentBalance -= withdrawalAmount;
+  return currentBalance;
+}
+
+}
