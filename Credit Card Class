@@ -1,19 +1,58 @@
 //This wil contain credit card information
 
+import java.util.random;
+import java.util.Arrays;
+
 class CreditCard
 {
-    private int cardNumber;
+    private int[] cardNumber;
     private String cardHolder;
-    private int cvc;
+    private int[] cvv;
     private String expirationDate;
     private double cardBalance;
+    private Random rand;
 
     CreditCard()
     {
-      cardNumber = 1234567891011213;
+      cardNumber = new int[16];
       cardHolder = "";
-      cvc = 123;
+      cvv = new int[3];
       expirationDate = "";
       cardBalance = 00.00;
+      rand = new Random();
+    }
+
+    long int generateCardNumber()
+    {
+        for(int i = 0; i < cardNumber.size(); i++)
+        {
+            cardNumber[0] = 4;
+            cardNumber[i + 1] = rand.nextInt(10);
+            cardNumber[15] += cardNumber[i-1] /10
+        }
+        return cardNumber;
+    }
+
+    string generateExpirationDate()
+    {
+        
+    }
+
+    int generateCVV()
+    {
+        for(int i = 0; i < cvv.size(); i++)
+        {
+            cvv[i] = rand.nextInt(10);
+        }
+    }
+}
+
+public class Test
+{
+    public static void main(String[] args)
+    {
+        CreditCard c;
+        c.generateCardNumber();
+        c.generateCVV();
     }
 }
