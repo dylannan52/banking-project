@@ -1,22 +1,31 @@
 //This code will handle the user interface
 import java.awt.*;
+import javax.swing.*;
 
-class UI {
-  void clearScreen() {
+class UI 
+{
+  void clearScreen() 
+  {
   }
 
-  void displayMenu() {
+  void displayMenu() 
+  {
+      
   }
 
-  void displayCustomerMenu() {
+  void displayCustomerMenu() 
+  {
   }
 
-  void displayAdminMenu() {
+  void displayAdminMenu() 
+  {
   }
 
-  void displayTransactionsMenu() {
+  void displayTransactionsMenu() 
+  {
   }
 
-  void pressEnter() {
+  void pressEnter() 
+  {
   }
 }
