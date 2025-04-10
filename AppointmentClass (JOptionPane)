@@ -1,0 +1,120 @@
+//This version uses the JOptionPane GUI
+import javax.swing.JOptionPane;
+import java.util.ArrayList;
+
+//Header files to format date and time
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+class Appointment 
+{
+    private String appointmentDate;
+    private String appointmentTime;
+    private static ArrayList<Appointment> appointments; //Store customer time slots
+
+    Appointment() //Contructor to initialize variables
+    {
+        appointmentDate = "";
+        appointmentTime = "";
+        appointments = new ArrayList<>();
+    }
+    
+    void setAppointment() //Method to set an appointment date
+    {
+        appointmentDate = JOptionPane.showInputDialog("What day would you like your appointment to be? (MM/dd/yyyy) ");
+        boolean validDate = validateAppointmentDate();
+
+        while (!validDate) 
+        {
+            JOptionPane.showMessageDialog(null, appointmentDate + " is not a valid date. Try again. ");
+            appointmentDate = JOptionPane.showInputDialog("What day would you like your appointment to be? (MM/dd/yyyy) ");
+            validDate = validateAppointmentDate();
+        }
+
+        appointmentTime = JOptionPane.showInputDialog("What time would you like your appointment to be (hh:mm AM/PM)? ");
+        boolean validTime = validateAppointmentTime();
+
+        while (!validTime) 
+        {
+            JOptionPane.showMessageDialog(null, appointmentTime + " is not a valid date. Try again. ");
+            appointmentTime = JOptionPane.showInputDialog("What day would you like your appointment to be? (MM/dd/yyyy) ");
+            validTime = validateAppointmentTime();
+        }
+
+        if (isAvailable()) 
+        {
+            appointments.add(this);
+            JOptionPane.showMessageDialog(null, "Appointment slot added successfully.");
+        } 
+        else 
+        {
+            JOptionPane.showMessageDialog(null, "Sorry. This time slot is already taken. Please select another one.");
+        }
+}
+
+    boolean validateAppointmentDate() //Method to check whether user entered a valid date
+    {
+	      LocalDate currentDate = LocalDate.now();
+	      DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
+	      try
+	      {
+		        LocalDate date = LocalDate.parse(appointmentDate, format);
+		        if(date.isBefore(currentDate)) 
+            {
+			          return false;
+  		      }
+	      }
+	      catch(DateTimeParseException e)
+      	{
+      		e.getMessage();
+      		return false;
+      	}
+      	return true;
+    }
+
+	  boolean validateAppointmentTime() //Method to check whether user entered a valid time
+    {
+    		LocalTime currentTime = LocalTime.now();
+    		DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm a");
+    
+    		try
+    		{
+    			LocalTime time = LocalTime.parse(appointmentTime, format);
+    			if(time.isBefore(currentTime)) 
+          {
+    				return false;
+    			}
+    		}
+    		catch(DateTimeParseException e)
+    		{
+    			e.getMessage();
+    			return false;
+    		}
+    		return true;
+	  }
+        boolean isAvailable() //Method to check whether time slot is available
+        {
+            for(Appointment existing_appoint: appointments)
+            {
+                if(existing_appoint.appointmentDate.equals(this.appointmentDate) && 
+                        existing_appoint.appointmentTime.equals(this.appointmentTime))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+}
+
+public class SE_Project 
+{
+    public static void main(String[] args) 
+    {
+        Appointment test = new Appointment();
+        
+        test.setAppointment();
+    }
+}
