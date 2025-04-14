@@ -1,5 +1,6 @@
 //This code will handle the user interface with a GUI
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
@@ -21,7 +22,6 @@ class UI implements ActionListener
   private JButton userButton;
   private JButton adminButton;
 
-  private JLabel label;
   private CardLayout layout;
 
   UI()
@@ -31,11 +31,9 @@ class UI implements ActionListener
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     layout = new CardLayout();
     mainPanel = new JPanel(layout);
-    button = new JButton();
-    label = new JLabel();
 
     displayMainMenu();
-    displayCustomerMenu();
+    displayUserMenu();
     displayAdminMenu();
     displayTransactionsMenu();
 
@@ -51,43 +49,40 @@ class UI implements ActionListener
   {
     mainMenuPanel = new JPanel();
 
-    MainMenu.setSize(400,300);
-    MainMenu.add(panel);
+    mainMenuPanel.setSize(400,300);
 
-    userbutton = new JButton("User");
+    userButton = new JButton("User");
     userButton.setBounds(10,80,80,25);
     userButton.addActionListener(this);
-
+    mainMenuPanel.add(userButton);
+    
     adminButton = new JButton("Administrator");
     adminButton.setBounds(10,160,80,50);
     adminButton.addActionListener(this);
+    mainMenuPanel.add(adminButton);
   }
 
   void displayUserMenu() 
   {
-    userPanel = new JPanel();
-    userPanel.add(new JLabel("Welcome User!"));
-    JButton back = new JButton("Back");
+      userPanel = new JPanel();
+      userPanel.add(new JLabel("Welcome User!"));
+      JButton back = new JButton("Back");
 
-    back.addActionListener(e -> cardLayout.show(mainPanel, "Main Menu"));
-    userPanel.add(back);
+      back.addActionListener(e -> layout.show(mainPanel, "Main Menu"));
+      userPanel.add(back);
   }
 
   void displayAdminMenu() 
   {
-    adminPanel = new JPanel();
-    adminPanel.add(new JLabel("Welcome Administrator!"));
-    JButton back = new JButton("Back");
-
-    back.addActionListener(e -> cardLayout.show(mainPanel, "Main Menu"));
-    adminPanel.add(back);
+      adminPanel = new JPanel();
+      adminPanel.add(new JLabel("Welcome Administrator!"));
+      JButton back = new JButton("Back");
+      
+      back.addActionListener(e -> layout.show(mainPanel, "Main Menu"));
+      adminPanel.add(back);
   }
 
   void displayTransactionsMenu() 
-  {
-  }
-
-  void pressEnter() 
   {
   }
 
@@ -96,11 +91,19 @@ class UI implements ActionListener
   {
     if(e.getSource() == userButton)
     {
-      cardLayout.show(mainPanel, "User");
+      layout.show(mainPanel, "User");
     }
     else if (e.getSource() == adminButton)
     {
-      cardLayout.show(mainPanel, "Administrator");
+      layout.show(mainPanel, "Administrator");
     }
   }
+}
+
+public class UI_Test 
+{
+    public static void main(String[] args) 
+    {
+       new UI();
+    }
 }
