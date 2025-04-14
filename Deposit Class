@@ -1,1 +1,35 @@
-//This will handle user deposits
+
+public class Deposit {
+
+	private double depositAmount;
+	private String depositType;
+	private double CurrentAmount;
+	private int DepositID;
+	
+	
+public Deposit(double Amount, String depositType, double currentAmount, int DepositID)
+{
+	this.depositAmount = Amount;
+	this.depositType = depositType;
+	this.CurrentAmount = currentAmount;
+	this.DepositID = DepositID;
+}
+
+public double makeDeposit()
+{
+	CurrentAmount += depositAmount;
+	return CurrentAmount;
+}
+public boolean validateAmount() {
+	
+	Boolean flag= true;
+	
+	if(depositAmount < 0)
+	{
+		System.out.println("Amount must be greater than zero");
+		flag=false;
+	}
+	
+	return flag;
+}
+}
