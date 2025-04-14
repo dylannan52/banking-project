@@ -19,23 +19,47 @@ class Employee
   void setEmployeeID(int[] ID);
   {
     this.ID = employeeID;
-    for(int i = 0; i < employeeID.length; i++)
+    ID[0] = 1;
+    StringBuilder stringEmployeeID = new StringBuilder();
+
+    for(int i = 1; i < employeeID.length; i++)
     {
-      employeeID[i] = rand.nextInt(10);
+      ID[i] = rand.nextInt(10);
     }
 
-    System.out.println("Employee ID: " + employeeID.toString());
+    for(int i = 0; i < employeeID.length; i++)
+    {
+      stringEmployeeID.append(ID[i]);
+      if((i + 1) % 6 == 0 && i != employeeID.length - 1)
+      {
+        stringEmployeeID.append("");
+      }
+    }
+
+    System.out.println("Employee ID: " + stringEmployeeID.toString());
   }
 
   void setCustomerID(int[] cID)
   {
     this.cID = customerID;
-    for(int i = 0; i < customerID.length; i++)
+    cID[0] = 1;
+    StringBuilder stringCustomerID = new StringBuilder();
+
+    for(int i = 1; i < customerID.length; i++)
     {
-      customerID[i] = rand.nextInt(10);
+      cID[i] = rand.nextInt(10);
     }
 
-    System.out.println("Customer ID: " + customerID.toString());
+    for(int i = 0; i < customerID.length; i++)
+    {
+      stringCustomerID.append(cID[i]);
+      if((i + 1) % 6 == 0 && i != customerID.length - 1)
+      {
+        stringCustomerID.append("");
+      }
+    }
+
+    System.out.println("Customer ID: " + stringCustomerID.toString());
   }
 }
 
