@@ -1,1 +1,59 @@
 //This will handle the transfer of funds from one account to another
+
+public class TransferFunds{
+double transferAMount;
+double currentAmount;
+int transferID;
+
+private static int nextTransferID = 1;
+
+public TransferFunds(double currentAmount) {
+    this.currentAmount = currentAmount;
+    this.transferID = nextTransferID++;
+}
+
+public void transferMoney(TransferFunds A, TransferFunds B) {
+    boolean flag = true;
+
+    if (A.transferAmount > A.currentAmount) {
+      System.out.println("Amount indicated exceeds amount available.");
+            flag = false;
+    } else if (A.transferAmount <= 0) {
+        System.out.println("Amount must be greater than zero.");
+        flag = false;
+    }
+
+    if (!flag) {
+        System.out.println("Transfer cannot take place.");
+    } else {
+        // Withdraw from A and deposit to B
+        A.makeWithdrawal(A.transferAmount);
+        B.makeDeposit(A.transferAmount);
+        System.out.println("Transfer Successful. Transfer ID: " + A.transferID);
+    }
+}
+
+public boolean validateAmount() {
+    boolean flag = true;
+
+    if (transferAmount > currentAmount) {
+        System.out.println("Amount indicated exceeds amount available.");
+        flag = false;
+    }
+
+    return flag;
+}
+
+public void makeWithdrawal(double amount) {
+    currentAmount -= amount;
+}
+
+public void makeDeposit(double amount) {
+    currentAmount += amount;
+}
+
+// Getter for transfer ID
+public int getTransferID() {
+    return transferID;
+}
+}
