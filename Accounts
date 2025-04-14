@@ -159,6 +159,18 @@ public class Accounts {
         System.out.println("Email successfully changed.");
     }
 
+    public void checkAccount() {
+            
+            System.out.println("Account number is: " + this.account_num);
+            
+    }
+        
+        public void checkRouting() {
+            
+            System.out.println("Routing number is: " + this.routing_num);
+            
+    }
+
     
     
 }
