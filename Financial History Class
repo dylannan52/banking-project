@@ -1,1 +1,34 @@
 //This will output a user's payment/deposit history
+
+import java.util.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+class FinancialHistory
+{
+  private String paymentHistoryDate;
+  private double paymentHistoryAmount;
+  protected String name;
+  protected String address;
+  private String phoneNumber;
+  private int[] SSN;
+  private int creditScore;
+
+  FinancialHistory()
+  {
+    SSN = new int[8];
+    name = "";
+    address = "";
+    phoneNumber = 00000000000;
+    creditScore = 625;
+    paymentHistoryAmount 0.00;
+    paymentHistoryDate = "";
+  }
+}
+
+public class FinancialHistoryTest
+{
+  public static void main(String[] args)
+  {
+
+  }
+}
