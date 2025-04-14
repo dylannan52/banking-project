@@ -1,10 +1,12 @@
 //This will output a user's payment/deposit history
-
+import java.util.Scanner;
+import java.util.Random;
 import java.util.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 class FinancialHistory
 {
+  //Attributes of User
   private String paymentHistoryDate;
   private double paymentHistoryAmount;
   protected String name;
@@ -13,8 +15,21 @@ class FinancialHistory
   private int[] SSN;
   private int creditScore;
 
+  //Attributes to calculate a user's credit score
+  private int missedPayments;
+  private double totalCreditLimit;
+  private double currentDebt;
+  private int years;
+  private int creditInqueries;
+  private boolean hasLoan;
+
+  //To test functionality
+  private Random rand;
+  private Scanner keyboard;
+
   FinancialHistory()
   {
+    //Initialize user values
     SSN = new int[8];
     name = "";
     address = "";
@@ -22,6 +37,122 @@ class FinancialHistory
     creditScore = 625;
     paymentHistoryAmount 0.00;
     paymentHistoryDate = "";
+
+    //Initialize user credit score values
+    missedPayments = 0;
+    totalCreditLimit = 0;
+    currentDebt = 0;
+    years = 0;
+    creditInqueries = 0;
+    hasLoan = false;
+
+    rand = new Random();
+    keyboard = new Scanner(System.in);
+  }
+
+  public void setMissedPayments(int count) 
+  { 
+    this.missedPayments = count; 
+  }
+
+  public void setTotalCreditLimit(double limit) 
+  { 
+    this.totalCreditLimit = limit;
+  }
+  public void setCurrentDebt(double debt) 
+  { 
+    this.currentDebt = debt; 
+  }
+  public void setCreditHistoryLength(int years) 
+  { 
+    this.years = years; 
+  }
+  public void setCreditInquiries(int inquiries) 
+  { 
+    this.creditInquiries = inquiries; 
+  }
+  public void setLoanTypesMix(boolean hasMix) 
+  {
+    this.hasLoan = hasMix; 
+  }
+
+  int calculateCreditScore()
+  {
+    //Payment History
+    creditScore -= missedPayments * 10;
+
+    //Credit Utilization
+    if(totalCreditLimit > 0)
+    {
+      double utilization = currentDebt / totalCreditLimit;
+
+      if(utilization < 0.1)
+      {
+        creditScore += 30;
+      }
+      else if (utilization < 0.3)
+      {
+        creditScore += 20;
+      }
+      else if (utilization < 0.5)
+      {
+        creditScore += 10;
+      }
+      else
+        creditScore -=20;
+    }
+
+    //Credit History Length
+    creditScore += Math.min(years * 2, 30);
+
+    //New inqueries
+    creditScore -= creditInqueries * 5;
+
+    //Credit Mix
+    if(hasLoan)
+    {
+      creditScore += 20;
+    }
+
+    return Math.min(850, Math.max(300, creditScore));
+  }
+
+  void setUser Information()
+  {
+    System.out.println("Enter your name: ");
+    name = keyboard.nextLine();
+
+    System.out.println("Enter your phone number: ");
+    phoneNumber = keyboard.nextLine();
+
+    System.out.println("Enter your address: ");
+    address = keyboard.nextLine();
+
+    StringBuilder stringSSN = new StringBuilder();
+
+    for(int i = 0; i < SSN.length; i++)
+    {
+      SSN[i] = rand.nextInt(10);
+    }
+
+    for(int i = 0; i < SSN.length; i++)
+    {
+      stringSSN.append(SSN[i]);
+
+      if(i == 2 || i == 4)
+      {
+        stringSSN.append("-");
+      }
+    }
+
+    System.out.println("SSN: " + stringSSN.toString());
+    System.out.println("Credit Score" + calculateCreditScore());
+  }
+
+  void printUserInformation()
+  {
+      System.out.println("User information:" + "\n");
+      setUserInformation();
   }
 }
 
@@ -29,6 +160,16 @@ public class FinancialHistoryTest
 {
   public static void main(String[] args)
   {
+    FinancialHistory f = new FinancialHistory();
 
+    f.setMissedPayments(1);
+    f.setTotalCreditLimit(10000);
+    f.setCurrentDebt(3000);
+    f.setCreditHistoryLength(5);
+    f.setNewCreditInquiries(2);
+    f.setLoanTypesMix(true);    
+    f.calculateCreditScore();
+    f.setUserInformation();
+    f.printUserInformation();
   }
 }
