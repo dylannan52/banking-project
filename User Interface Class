@@ -1,20 +1,55 @@
-//This code will handle the user interface
-import java.awt.*;
-import javax.swing.*;
+//This code will handle the user interface with a GUI
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import java.awt.event.ActionListener;
 
-class UI 
+class UI implements ActionListener
 {
+  private JFrame frame;
+  private JFrame MainMenu;
+  private JPanel panel;
+  private JButton userButton;
+  private JButton adminButton;
+  private JLabel label;
+
+  UI()
+  {
+    frame = new JFrame();
+    panel = new JPanel();
+    button = new JButton();
+    label = new JLabel();
+  }
+
   void clearScreen() 
   {
   }
 
   void displayMenu() 
   {
-      
+    MainMenu = new JFrame("Main Menu");
+    panel = new JPanel();
+
+    MainMenu.setSize(400,350);
+    MainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    MainMenu.add(panel);
+
+    userbutton = new JButton("User");
+    userButton.setBounds(10,80,80,25);
+    userButton.addActionListener(new UI());
+    adminButton = new JButton("Administrator");
+    adminButton.setBounds(10,160,80,50);
+    adminButton.addActionListener(new UI());
   }
 
   void displayCustomerMenu() 
   {
+    
   }
 
   void displayAdminMenu() 
@@ -27,5 +62,11 @@ class UI
 
   void pressEnter() 
   {
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e)
+  {
+    
   }
 }
