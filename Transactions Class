@@ -2,45 +2,37 @@
 
 public class Transactions {
  
-		private float TotalFunds;  
-		private int TransactionNumber;  
-		private String TransactionDate;  
-		private String TransactionType;  
+private float TotalFunds;  
+private int TransactionNumber;  
+private String TransactionDate;  
+private String TransactionType;  
 
 		  
-		public Transactions(float funds, int number, String date, String type){ 
+public Transactions(float funds, int number, String date, String type){ 
 
-		this.TotalFunds = funds;  
-		this.TransactionNumber = number;  
-		this.TransactionDate = date;  
-		this.TransactionType = type;  
+this.TotalFunds = funds;  
+this.TransactionNumber = number;  
+this.TransactionDate = date;  
+this.TransactionType = type;  
  } 
-
-		  
-
-		public float getTotalFunds()  {  
-			
-			return TotalFunds;  
+ 
+public float getTotalFunds()  {  	
+return TotalFunds;  
 }  
 
-		public int getTransactionNumber() {  
-
-			return TransactionNumber;  
+public int getTransactionNumber() {  
+return TransactionNumber;  
+}  
+  
+public String gettransactionDate()  { 
+return TransactionDate;  
 }  
 
-		  
-
-		public String gettransactionDate()  { 
-		
-			return TransactionDate;  
-}  
-
-		public String gettransactionType()  {  
-
-			return TransactionType;  
+public String gettransactionType()  {  
+return TransactionType;  
 } 
 
-} 
+}
 
 public class main {
 	
