@@ -1,1 +1,57 @@
-//This will display the functionality of the transactions
+//this class must be reviewed
+
+public class Transactions {
+ 
+		private float TotalFunds;  
+		private int TransactionNumber;  
+		private String TransactionDate;  
+		private String TransactionType;  
+
+		  
+		public Transactions(float funds, int number, String date, String type){ 
+
+		this.TotalFunds = funds;  
+		this.TransactionNumber = number;  
+		this.TransactionDate = date;  
+		this.TransactionType = type;  
+ } 
+
+		  
+
+		public float getTotalFunds()  {  
+			
+			return TotalFunds;  
+}  
+
+		public int getTransactionNumber() {  
+
+			return TransactionNumber;  
+}  
+
+		  
+
+		public String gettransactionDate()  { 
+		
+			return TransactionDate;  
+}  
+
+		public String gettransactionType()  {  
+
+			return TransactionType;  
+} 
+
+} 
+
+public class main {
+	
+	public static void main (String[] args) {
+		
+		Transactions Transaction1 = new Transactions (36.65f, 102, "01-31-2025", "Withdrawal");
+				
+		System.out.println("Funds: $" + Transaction1.getTotalFunds());
+		System.out.println("Transaction ID" + Transaction1.getTransactionNumber());
+		System.out.println("Date: " + Transaction1.gettransactionDate());
+		System.out.println("Type: " + Transaction1.gettransactionType());
+	}
+}
+
