@@ -12,36 +12,57 @@ import java.awt.event.ActionListener;
 class UI implements ActionListener
 {
   private JFrame frame;
-  private JFrame MainMenu;
-  private JPanel panel;
+
+  private JPanel MainMenu;
+  private JPanel mainPanel;
+  private JPanel mainMenuPanel;
+  private JPanel userPanel;
+  private JPanel adminPanel;
+
   private JButton userButton;
   private JButton adminButton;
+
   private JLabel label;
+  private CardLayout layout;
 
   UI()
   {
-    frame = new JFrame();
-    panel = new JPanel();
+    frame = new JFrame("Bank System");
+    frame.setSize(400,300);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    layout = new CardLayout();
+    mainPanel = new JPanel(layout);
     button = new JButton();
     label = new JLabel();
+
+    displayMainMenu();
+    displayCustomerMenu();
+    displayAdminMenu();
+    displayTransactionsMenu();
+
+    mainPanel.add(mainMenuPanel, "Main Menu");
+    mainPanel.add(userPanel, "User");
+    mainPanel.add(adminPanel, "Administrator");
+
+    frame.add(mainPanel);
+    frame.setVisible(true);
   }
 
   void clearScreen() 
   {
   }
 
-  void displayMenu() 
+  void displayMainMenu() 
   {
-    MainMenu = new JFrame("Main Menu");
-    panel = new JPanel();
+    mainMenuPanel = new JPanel();
 
-    MainMenu.setSize(400,350);
-    MainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    MainMenu.setSize(400,300);
     MainMenu.add(panel);
 
     userbutton = new JButton("User");
     userButton.setBounds(10,80,80,25);
     userButton.addActionListener(this);
+
     adminButton = new JButton("Administrator");
     adminButton.setBounds(10,160,80,50);
     adminButton.addActionListener(this);
