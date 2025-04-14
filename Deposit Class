@@ -18,14 +18,18 @@ public Deposit(double Amount, String depositType, double currentAmount, int Depo
 
 public double makeDeposit()
 {
-	CurrentAmount += depositAmount;
+	boolean flag = validateAmount();
+	if (flag){
+		CurrentAmount += depositAmount;
+	}
 	return CurrentAmount;
 }
+
 public boolean validateAmount() {
 	
 	Boolean flag= true;
 	
-	if(depositAmount < 0)
+	if(depositAmount <= 0)
 	{
 		System.out.println("Amount must be greater than zero");
 		flag=false;
