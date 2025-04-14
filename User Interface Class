@@ -13,7 +13,6 @@ class UI implements ActionListener
 {
   private JFrame frame;
 
-  private JPanel MainMenu;
   private JPanel mainPanel;
   private JPanel mainMenuPanel;
   private JPanel userPanel;
@@ -48,10 +47,6 @@ class UI implements ActionListener
     frame.setVisible(true);
   }
 
-  void clearScreen() 
-  {
-  }
-
   void displayMainMenu() 
   {
     mainMenuPanel = new JPanel();
@@ -68,13 +63,24 @@ class UI implements ActionListener
     adminButton.addActionListener(this);
   }
 
-  void displayCustomerMenu() 
+  void displayUserMenu() 
   {
-    
+    userPanel = new JPanel();
+    userPanel.add(new JLabel("Welcome User!"));
+    JButton back = new JButton("Back");
+
+    back.addActionListener(e -> cardLayout.show(mainPanel, "Main Menu"));
+    userPanel.add(back);
   }
 
   void displayAdminMenu() 
   {
+    adminPanel = new JPanel();
+    adminPanel.add(new JLabel("Welcome Administrator!"));
+    JButton back = new JButton("Back");
+
+    back.addActionListener(e -> cardLayout.show(mainPanel, "Main Menu"));
+    adminPanel.add(back);
   }
 
   void displayTransactionsMenu() 
@@ -88,6 +94,13 @@ class UI implements ActionListener
   @Override
   public void actionPerformed(ActionEvent e)
   {
-    
+    if(e.getSource() == userButton)
+    {
+      cardLayout.show(mainPanel, "User");
+    }
+    else if (e.getSource() == adminButton)
+    {
+      cardLayout.show(mainPanel, "Administrator");
+    }
   }
 }
