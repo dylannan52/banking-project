@@ -1,73 +1,83 @@
 //This will contain the details of the advisor (employee name, id, etc.)
 import java.util.Random;
+import java.util.Scanner;
 
 class Employee
 {
-  protected int[] employeeID;
-  protected int[] customerID;
-  private String employeeName;
-  private Random rand;
+    protected int[] employeeID;
+    protected int[] customerID;
+    private String employeeName;
+    private Random rand;
 
-  Employee()
-  {
-    rand = new Random();
-    customerID = new int[6];
-    employeeID = new int[6];
-    employeeName = "";
-  }
-
-  void setEmployeeID(int[] ID);
-  {
-    this.ID = employeeID;
-    ID[0] = 1;
-    StringBuilder stringEmployeeID = new StringBuilder();
-
-    for(int i = 1; i < employeeID.length; i++)
+    Employee()
     {
-      ID[i] = rand.nextInt(10);
+        rand = new Random();
+        customerID = new int[6];
+        employeeID = new int[6];
+        employeeName = "";
     }
 
-    for(int i = 0; i < employeeID.length; i++)
+    void setEmployeeID()
     {
-      stringEmployeeID.append(ID[i]);
-      if((i + 1) % 6 == 0 && i != employeeID.length - 1)
-      {
-        stringEmployeeID.append("");
-      }
+        employeeID[0] = 1;
+        StringBuilder stringEmployeeID = new StringBuilder();
+
+        for(int i = 1; i < employeeID.length; i++)
+        {
+            employeeID[i] = rand.nextInt(10);
+        }
+
+        for(int i = 0; i < employeeID.length; i++)
+        {
+            stringEmployeeID.append(employeeID[i]);
+            if((i + 1) % 6 == 0 && i != employeeID.length - 1)
+            {
+                stringEmployeeID.append("");
+            }
+        }
+        System.out.println("Employee ID: " + stringEmployeeID.toString());
     }
 
-    System.out.println("Employee ID: " + stringEmployeeID.toString());
-  }
-
-  void setCustomerID(int[] cID)
-  {
-    this.cID = customerID;
-    cID[0] = 1;
-    StringBuilder stringCustomerID = new StringBuilder();
-
-    for(int i = 1; i < customerID.length; i++)
+    void setCustomerID()
     {
-      cID[i] = rand.nextInt(10);
-    }
+        customerID[0] = 1;
+        StringBuilder stringCustomerID = new StringBuilder();
 
-    for(int i = 0; i < customerID.length; i++)
+        for(int i = 1; i < customerID.length; i++)
+        {
+            customerID[i] = rand.nextInt(10);
+        }
+
+        for(int i = 0; i < customerID.length; i++)
+        {
+            stringCustomerID.append(customerID[i]);
+            if((i + 1) % 6 == 0 && i != customerID.length - 1)
+            {
+                stringCustomerID.append("");
+            }
+        }
+        System.out.println("Customer ID: " + stringCustomerID.toString());
+    }
+    
+    void setEmployeeName()
     {
-      stringCustomerID.append(cID[i]);
-      if((i + 1) % 6 == 0 && i != customerID.length - 1)
-      {
-        stringCustomerID.append("");
-      }
+        String name;
+        Scanner keyboard = new Scanner(System.in);
+        
+        System.out.print("Enter your name: ");
+        name = keyboard.nextLine();
+        
+        System.out.println("Employee Name: " + name);
     }
-
-    System.out.println("Customer ID: " + stringCustomerID.toString());
-  }
 }
 
-public class Employee_Test
+public class FinancialAdvisorTest
 {
   public static void main(String[] args)
   {
       Employee e = new Employee();
+      
+      e.setEmployeeName();
       e.setEmployeeID();
       e.setCustomerID();
   }
