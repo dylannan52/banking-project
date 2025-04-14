@@ -41,10 +41,10 @@ class UI implements ActionListener
 
     userbutton = new JButton("User");
     userButton.setBounds(10,80,80,25);
-    userButton.addActionListener(new UI());
+    userButton.addActionListener(this);
     adminButton = new JButton("Administrator");
     adminButton.setBounds(10,160,80,50);
-    adminButton.addActionListener(new UI());
+    adminButton.addActionListener(this);
   }
 
   void displayCustomerMenu() 
