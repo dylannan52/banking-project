@@ -1,4 +1,3 @@
-//This will output a user's payment/deposit history
 import java.util.Scanner;
 import java.util.Random;
 import java.time.LocalDate;
@@ -57,31 +56,50 @@ class FinancialHistory
         keyboard = new Scanner(System.in);
     }
 
-    public void setMissedPayments(int count) 
+    public void setMissedPayments() 
     { 
-        this.missedPayments = count; 
+        System.out.print("\nEnter the user's missed number of payments: ");
+        missedPayments = keyboard.nextInt();
     }
 
-    public void setTotalCreditLimit(double limit) 
+    public void setTotalCreditLimit() 
     { 
-        this.totalCreditLimit = limit;
+        System.out.print("\nSet the credit limit for the user: ");
+        totalCreditLimit = keyboard.nextDouble();
     }
-    public void setCurrentDebt(double debt) 
+    public void setCurrentDebt() 
     { 
-        this.currentDebt = debt; 
+        System.out.print("\nEnter the user's current debt: ");
+        currentDebt = keyboard.nextDouble();
     }
-    public void setCreditHistoryLength(int years) 
+    public void setCreditHistoryLength() 
     { 
-        this.years = years; 
+        System.out.print("\nEnter the number of years the user has accumulated credit: ");
+        years = keyboard.nextInt();
     }
-    public void setCreditInquiries(int inquiries) 
+    public void setCreditInquiries() 
     { 
-        this.creditInqueries = inquiries; 
+        System.out.print("\nEnter the user's credit inqueries: ");
+        creditInqueries = keyboard.nextInt();
     }
-    public void setLoanTypesMix(boolean hasMix) 
+    public void setLoans()
     {
-        this.hasLoan = hasMix; 
+        String userLoan;
+        int numOfLoans;
+        
+        System.out.println("Currently, does the user have any loans: ");
+        userLoan = keyboard.next();
+        
+        if(userLoan.equals("yes") || userLoan.equals("Yes"))
+        {
+            hasLoan = true;
+            System.out.println("How many loans do you currently have? ");
+            numOfLoans = keyboard.nextInt();
+        }
+        else
+            hasLoan = false;
     }
+    
 
     int calculateCreditScore()
     {
@@ -165,6 +183,18 @@ class FinancialHistory
         System.out.println("Phone Number: " + stringPhoneNumber.toString());
         System.out.println("Address: " + address);
         System.out.println("SSN: " + stringSSN.toString());
+        System.out.print("Missed Payments ");
+        setMissedPayments();
+        System.out.print("\nTotal Credit Limit");
+        setTotalCreditLimit();
+        System.out.print("\nCurrent Debt ");
+        setCurrentDebt();
+        System.out.print("\nYears of Credit History ");
+        setCreditHistoryLength();
+        System.out.print("\nCredit Inqueries ");
+        setCreditInquiries();
+        System.out.print("\nLoans ");
+        setLoans();
         System.out.println("Credit Score: " + calculateCreditScore());
     }
 }
@@ -175,15 +205,6 @@ public class FinancialHistory_Test
     {
         FinancialHistory f = new FinancialHistory();
         f.setUserInformation();
-        f.printUserInformation();
-        
-        f.setMissedPayments(1);
-        f.setTotalCreditLimit(10000);
-        f.setCurrentDebt(3000);
-        f.setCreditHistoryLength(5);
-        f.setCreditInquiries(2);
-        f.setLoanTypesMix(true);    
-        f.calculateCreditScore();
-        
+        f.printUserInformation();        
     }
 }
