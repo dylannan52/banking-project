@@ -2,12 +2,17 @@
 
 import java.util.Scanner;
 import java.util.Random;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class PrintReport
 {
     private int[] reportID;
     private String reportType;
     private String dateGenerated;
+    private String Date;
     private Scanner keyboard;
     private Random rand;
     private StringBuilder stringReportID;
@@ -40,8 +45,23 @@ public class PrintReport
         }
         
         //Input the date of when the report was generated
-        System.out.println("Enter the date of when the report was generated: ");
-        dateGenerated = keyboard.nextLine(); //Date should be inputted as MM/dd/yyyy
+        System.out.println("Would you like to generate a report now? ");
+        dateGenerated = keyboard.nextLine();
+
+        if(dateGenerated.equals("yes") || dateGenerated.equals("Yes"))
+        {
+            LocalDate current = LocalDate.now();
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
+            try
+            {
+                LocalDate now = LocalDate.parse(Date, current);
+            }
+            catch(DateTimeParseException e)
+            {   
+                e.getMessage();
+            }
+        }
         
         //Input the type of report that's printed
         System.out.println("Enter the type of report that is to be printed: ");
