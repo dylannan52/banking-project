@@ -1,18 +1,48 @@
 //This class will print the report
 
-public class PrintReport{
-int reportID
-String reportType;
-String dateGenerated;
+import java.util.Random;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-public void generateReport(int reportID){
-  this.report = reportID;
+public class PrintReport
+{
+    private int[] reportID;
+    private String reportType;
+    private String dateGenerated;
+    private Random rand;
+    private StringBuilder stringReportID;
+    
+    PrintReport()
+    {
+        reportID = new int[6];
+        rand = new Random();
+        stringReportID = new StringBuilder();
+    }
 
-System.out.println("Generating report for Report ID: " + reportID);
-System.out.println("Report Typer: " + reportType);
-
-System.out.println("Date Generated: " + dateGenerated)
-
-}
-
+    public void generateReport()
+    {
+        for(int i = 0; i < reportID.length; i++)
+        {
+            reportID[i] = rand.nextInt(10);
+        }
+        
+        for(int i = 0; i < reportID.length; i++)
+        {
+            stringReportID.append(reportID[i]);
+            if((i + 1) % 6 == 0 && i != reportID.length - 1)
+            {
+                stringReportID.append("");
+            }
+        }
+        
+        System.out.println("Generating report for Report ID: " + stringReportID.toString());
+        //System.out.println("Report Type: " + reportType);
+        //System.out.println("Date Generated: " + dateGenerated);
+    }
+    
+    public static void main(String[] args)
+    {
+        PrintReport p = new PrintReport();
+        p.generateReport();
+    }
 }
