@@ -1,40 +1,78 @@
-//This class must be reviewed
+//This class needs to be ran with 'Financial History' class
 
-public class Deposit {
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-	private double depositAmount;
-	private String depositType;
-	private double CurrentAmount;
-	private int DepositID;
-	
-	
-public Deposit(double Amount, String depositType, double currentAmount, int DepositID)
+public class Deposit 
 {
-	this.depositAmount = Amount;
-	this.depositType = depositType;
-	this.CurrentAmount = currentAmount;
-	this.DepositID = DepositID;
-}
-
-public double makeDeposit()
-{
-	boolean flag = validateAmount();
-	if (flag){
-		CurrentAmount += depositAmount;
-	}
-	return CurrentAmount;
-}
-
-public boolean validateAmount() {
-	
-	Boolean flag= true;
-	
-	if(depositAmount <= 0)
-	{
-		System.out.println("Amount must be greater than zero");
-		flag=false;
-	}
-	
-	return flag;
-}
+    protected double depositAmount;
+    private double CurrentAmount;
+    private Random rand;
+    private int[] DepositID;
+    protected StringBuilder stringDepositID = new StringBuilder();
+    private List<Double> depositHistory = new ArrayList<>();
+    private List<String> depositDates = new ArrayList<>();
+    
+    public double getCurrentAmount()
+    {
+        return CurrentAmount;
+    }
+    
+    public void generateID()
+    {
+        DepositID = new int[9];
+        rand = new Random();
+        
+        //Assign a random number (0-9) to the DepositID array
+        for(int i = 0; i < DepositID.length; i++)
+        {
+            DepositID[i] = rand.nextInt(10);
+        }
+        
+        //Format the array for output
+        for(int i = 0; i < DepositID.length; i++)
+        {
+            stringDepositID.append(DepositID[i]);
+            if((i + 1) % 9 == 0 && i != DepositID.length - 1)
+            {
+                stringDepositID.append("");
+            }
+        }
+    }
+    
+    public String getID()
+    {
+        return stringDepositID.toString();
+    }
+    
+    public boolean validateAmount(double Deposit) 
+    {	
+        return Deposit > 0;
+    }
+    
+    public void makeDeposit(double deposit)
+    {
+        if(validateAmount(deposit))
+        {
+            depositAmount += deposit;
+            CurrentAmount += deposit;
+            generateID();
+            depositHistory.add(deposit);
+            depositDates.add(LocalDate.now().toString());
+        }
+        else
+            System.out.println("Deposit amount must be greater than 0.");
+    }
+    
+    public List<Double>getDepositHistory()
+    {
+        return depositHistory;
+    }
+    
+    public List<String>getDepositDates()
+    {
+        return depositDates;
+    }
 }
