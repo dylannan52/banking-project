@@ -24,6 +24,7 @@ public class PrintReport
         keyboard = new Scanner(System.in);
         rand = new Random();
         stringReportID = new StringBuilder();
+        Date = "";
     }
 
     public void generateReport()
@@ -55,7 +56,7 @@ public class PrintReport
 
             try
             {
-                LocalDate now = LocalDate.parse(Date, current);
+                LocalDate now = LocalDate.parse(Date, format);
             }
             catch(DateTimeParseException e)
             {   
