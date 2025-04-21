@@ -1,34 +1,19 @@
 //This will handle all withdrawals made
 
+package com.mycompany.finalbank;
+
 public class Withdrawal {
     private double withdrawalAmount;
-    private double currentAmount;
-    private int withdrawalID;
 
-    public boolean validateAmount(double withdrawalAmount) {
-        boolean flag = true;
-        if (withdrawalAmount > currentAmount) {
+    public void makeWithdrawal(double amount, Accounts user) {
+        if (amount > user.getBalance()) {
             System.out.println("Amount indicated exceeds amount available.");
-            flag = false;
-        } 
-            else if (withdrawalAmount <= 0) {
+        } else if (amount <= 0) {
             System.out.println("Withdrawal must be greater than zero.");
-            flag = false;
+        } else {
+            withdrawalAmount = amount;
+            user.subtractFromBalance(withdrawalAmount);
+            System.out.println(" $" + withdrawalAmount + " withdrawn successfully.");
         }
-        return flag;
-    }
-
-    public double makeWithdrawal(String accountNumber) {
-        // Simulated the input ;P
-        System.out.println("Enter amount to withdraw:");
-        withdrawalAmount = 100.0; // Assume user puts 100
-
-        boolean flag = validateAmount(withdrawalAmount);
-        if (flag) 
-        {
-            currentAmount -= withdrawalAmount;
-            System.out.println("$" + withdrawalAmount + " has been successfully withdrawn");
-        }
-        return currentAmount;
     }
 }
