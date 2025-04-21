@@ -1,35 +1,67 @@
 //This will contain the details of the application for credit cards
 
-public class CardApplication{
-  String applicationName;
-  int applicationID;
-  int applicationSSN;
+public class CardApplication
+{
+	private String applicationName;
+	private int applicationID;
+	private int applicationSSN;
 
-public void cardAppMenu(){
-  System.out.println("Credit Card Application");
-}
+	CardApplication(String name, int ID, int SSN)
+	{
+		setAppName(name);
+		setAppID(ID);
+		setAppSSN(SSN);
+	}
 
-public void setAppName(String name){
-        applicationName = name;
-}
- public void setAppID(int id) {
-        applicationID = id;
-}
+	public void showMenu()
+	{
+		System.out.println("=== Credit Card Application ===");
+	}
 
-public void setAppSSN(int ssn) {
-        applicantSSN = ssn;
-}
+	public void setAppName(String name)
+	{
+		if(name == null || name.trim().isEmpty())
+			throw new IllegalArgumentException("Application name cannot be empty.");
+        	this.applicationName = name;
+	}
 
-public String getAppName() {
-        return applicantName;
-}
 
-public int getAppID() {
-        return applicationID;
-}
+	public void setAppID(int id)
+	{
+		if(id <= 0)
+			throw new IllegalArgumentException("Application ID cannot be less than or equal to 0.");
+        	this.applicationID = id;
+	}
 
-public int getAppSSN() {
-        return applicantSSN;
-}
+	public void setAppSSN(int ssn) 
+	{
+		if(String.valueOf(ssn).length != 8)
+			throw new IllegalArgumentException("SSN must contain 8 numbers");
+        	this.applicantSSN = ssn;
+	}
 
+	public String getAppName() 
+	{
+        	return applicantionName;
+	}
+
+	public int getAppID() 
+	{
+        	return applicationID;
+	}
+
+	public int getAppSSN() 
+	{
+        	return applicantionSSN;
+	}
+
+	@Override
+    	public String toString() 
+	{
+        	return "CardApplication{" +
+                "Name='" + applicationName + '\'' +
+                ", ID=" + applicationID +
+                ", SSN=" + applicationSSN +
+                '}';
+    	}
 }
