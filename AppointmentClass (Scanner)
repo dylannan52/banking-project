@@ -1,123 +1,80 @@
+package com.mycompany.finalbank;
+
 import java.util.ArrayList;
 import java.util.Scanner;
-
-//Header files to use the date and time formatter
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-class Appointment 
-{
+public class Appointment {
+
     private String appointmentDate;
     private String appointmentTime;
-    private static ArrayList<Appointment> appointments; //Store customer appointment slots
-    protected Scanner keyboard;
+    private static ArrayList<Appointment> appointments = new ArrayList<>();
+    private Scanner keyboard;
 
-    Appointment //Constructor to initialize values
-    {
+    public Appointment() {
         appointmentDate = "";
         appointmentTime = "";
         keyboard = new Scanner(System.in);
-        appointments = new ArrayList<>();
     }
-    
-    void setAppointment() //Method to allow user to set an appointment date and time
-    {
-        System.out.println("What day would you like your appointment to be? (MM/dd/yyyy) ");
+
+    public void setAppointment() {
+        System.out.print("Enter appointment date (MM/dd/yyyy): ");
         appointmentDate = keyboard.nextLine();
-        boolean validDate = validateAppointmentDate();
 
-        while (!validDate) 
-        {
-            System.out.println("Invalid Date. Please enter a valid date (MM/dd/yyyy): ");
+        while (!validateAppointmentDate()) {
+            System.out.print("Invalid date. Please enter again (MM/dd/yyyy): ");
             appointmentDate = keyboard.nextLine();
-            validDate = validateAppointmentDate();
         }
 
-        System.out.println("What time would you like your appointment to be? (hh:mm AM/PM) ");
+        System.out.print("Enter appointment time (hh:mm AM/PM): ");
         appointmentTime = keyboard.nextLine();
-        boolean validTime = validateAppointmentTime();
 
-        while (!validTime) 
-        {
-            System.out.println("Invalid Time. Please enter a valid time (hh:mm AM/PM): ");
+        while (!validateAppointmentTime()) {
+            System.out.print("Invalid time. Please enter again (hh:mm AM/PM): ");
             appointmentTime = keyboard.nextLine();
-            validTime = validateAppointmentTime();
         }
 
-        if (isAvailable()) 
-        {
+        if (isAvailable()) {
             appointments.add(this);
-            System.out.println("Appointment slot added successfully.");
-        } 
-        else 
-        {
-            System.out.println("Sorry. This time slot is already taken. Please select another one.");
+            System.out.println(" Appointment scheduled on " + appointmentDate + " at " + appointmentTime);
+        } else {
+            System.out.println("That time slot is already taken. Try another.");
         }
-}
-
-    boolean validateAppointmentDate() //Method to check whether user entered a valid date
-    {
-	LocalDate currentDate = LocalDate.now();
-	DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-
-	try
-	{
-		LocalDate date = LocalDate.parse(appointmentDate, format);
-		if(date.isBefore(currentDate)) 
-                {
-			return false;
-		}
-	}
-	catch(DateTimeParseException e)
-	{
-		e.getMessage();
-		return false;
-	}
-	return true;
     }
 
-	boolean validateAppointmentTime() //Method to check whether user entered a valid time
-        {
-		LocalTime currentTime = LocalTime.now();
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm a");
+    private boolean validateAppointmentDate() {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
-		try
-		{
-			LocalTime time = LocalTime.parse(appointmentTime, format);
-			if(time.isBefore(currentTime)) 
-                        {
-				return false;
-			}
-		}
-		catch(DateTimeParseException e)
-		{
-			e.getMessage();
-			return false;
-		}
-		return true;
-	}
-        boolean isAvailable() //Method to check if written time slot is available
-        {
-            for(Appointment existing_appoint: appointments)
-            {
-                if(existing_appoint.appointmentDate.equals(this.appointmentDate) && 
-                        existing_appoint.appointmentTime.equals(this.appointmentTime))
-                {
-                    return false;
-                }
-            }
-            return true;
+        try {
+            LocalDate date = LocalDate.parse(appointmentDate, format);
+            return !date.isBefore(currentDate);
+        } catch (DateTimeParseException e) {
+            return false;
         }
-}
+    }
 
-public class SE_Project 
-{
-    public static void main(String[] args) 
-    {
-        Appointment test = new Appointment(); //Test the code
-        
-        test.setAppointment();
+    private boolean validateAppointmentTime() {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm a");
+
+        try {
+            LocalTime.parse(appointmentTime, format);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    private boolean isAvailable() {
+        for (Appointment a : appointments) {
+            if (a.appointmentDate.equals(this.appointmentDate) &&
+                a.appointmentTime.equals(this.appointmentTime)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
