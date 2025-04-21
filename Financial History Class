@@ -2,192 +2,128 @@
   Note: To run this program, you also need to use the 'Deposit' Class
 */
 
-import java.util.Scanner;
-import java.util.Random;
-import java.util.List;
+package com.mycompany.finalbank;
 
-class FinancialHistory extends Deposit
-{
-    //Attributes of User
-    private String paymentHistoryDate;
-    private double paymentHistoryAmount;
-    protected String name;
-    protected String address;
+import java.util.Scanner;
+import java.util.List;
+import java.util.Random;
+
+public class FinancialHistory extends Deposit {
+
+    private String name;
+    private String address;
     private String phoneNumber;
-    private int[] SSN = new int[8];
-    private int creditScore;
-    
-    //Format user input
+    private int[] SSN = new int[9];
     private StringBuilder stringSSN = new StringBuilder();
     private StringBuilder stringPhoneNumber = new StringBuilder();
-    
-    //Attributes to calculate a user's credit score
+    private int creditScore = 625;
+
     private int missedPayments;
     private double totalCreditLimit;
     private double currentDebt;
     private int years;
-    private int creditInqueries;
+    private int creditInquiries;
     private boolean hasLoan;
 
-    //To test functionality
-    private Random rand = new Random();
     private Scanner keyboard = new Scanner(System.in);
+    private Random rand = new Random();
 
-    FinancialHistory()
-    {
-        //Initialize user values
-        name = "";
-        address = "";
-        phoneNumber = "";
-        creditScore = 625;
-        paymentHistoryAmount = 0.00;
-        paymentHistoryDate = "";
-    
-        //Initialize user credit score values
-        missedPayments = 0;
-        totalCreditLimit = 0;
-        currentDebt = 0;
-        years = 0;
-        creditInqueries = 0;
-        hasLoan = false;
-    }  
-    
-    void setUserInformation()
-    {
-        //Set the user's name
+    public void setUserInformation() {
         System.out.println("Enter your name: ");
         name = keyboard.nextLine();
-    
-        //Set the user's phone number
-        System.out.println("Enter your phone number: ");
+
+        System.out.println("Enter your phone number (numbers only): ");
         phoneNumber = keyboard.nextLine();
         formatPhoneNumber();
-    
-        //Set the user's address
+
         System.out.println("Enter your address: ");
         address = keyboard.nextLine();
 
-        //Generate the user's SSN
         generateSSN();
     }
 
-    public void generateSSN()
-    {
-        for(int i = 0; i < SSN.length; i++)
-        {
+    private void generateSSN() {
+        for (int i = 0; i < SSN.length; i++) {
             SSN[i] = rand.nextInt(10);
         }
 
-        for(int i = 0; i < SSN.length; i++)
-        {
+        for (int i = 0; i < SSN.length; i++) {
             stringSSN.append(SSN[i]);
-            if(i == 2 || i == 4)
-            {
+            if (i == 2 || i == 4) {
                 stringSSN.append("-");
             }
         }
     }
-    
-    public void formatPhoneNumber()
-    {
-        for(int i = 0; i < phoneNumber.length(); i++)
-        {
+
+    private void formatPhoneNumber() {
+        for (int i = 0; i < phoneNumber.length(); i++) {
             stringPhoneNumber.append(phoneNumber.charAt(i));
-            if(i == 2 || i == 5)
-            {
+            if (i == 2 || i == 5) {
                 stringPhoneNumber.append("-");
             }
         }
     }
-    
-    public void setCreditAttributes()
-    {
-        System.out.print("\nMissed payments: ");
+
+    public void setCreditAttributes() {
+        System.out.print("Missed payments: ");
         missedPayments = keyboard.nextInt();
-        
+
         System.out.print("Total Credit Limit: ");
         totalCreditLimit = keyboard.nextDouble();
-        
+
         System.out.print("Current Debt: ");
-        currentDebt = keyboard.nextInt();
-        
+        currentDebt = keyboard.nextDouble();
+
         System.out.print("Years of Credit History: ");
         years = keyboard.nextInt();
-        
-        System.out.print("Credit Inqueries: ");
-        creditInqueries = keyboard.nextInt();
-        
-        System.out.print("Do you currently have any loans?(yes/no) ");
+
+        System.out.print("Credit Inquiries: ");
+        creditInquiries = keyboard.nextInt();
+
+        System.out.print("Do you currently have any loans? (yes/no): ");
         hasLoan = keyboard.next().equalsIgnoreCase("yes");
     }
-    
-    public int calculateCreditScore()
-    {
-        //Payment History
+
+    public int calculateCreditScore() {
         creditScore -= missedPayments * 10;
 
-        //Credit Utilization
-        if(totalCreditLimit > 0)
-        {
+        if (totalCreditLimit > 0) {
             double utilization = currentDebt / totalCreditLimit;
 
-            if(utilization < 0.1)
+            if (utilization < 0.1)
                 creditScore += 30;
             else if (utilization < 0.3)
                 creditScore += 20;
             else if (utilization < 0.5)
                 creditScore += 10;
             else
-                creditScore -=20;
+                creditScore -= 20;
         }
 
-        //Credit History Length
         creditScore += Math.min(years * 2, 30);
+        creditScore -= creditInquiries * 5;
 
-        //New inqueries
-        creditScore -= creditInqueries * 5;
-
-        if(hasLoan)
+        if (hasLoan)
             creditScore += 20;
 
         return Math.max(300, Math.min(850, creditScore));
     }
-    
-    public void printUserInformation()
-    {
-        System.out.println("\n---User information---");
+
+    public void printUserInformation(Accounts user) {
+        System.out.println("\n--- User Financial History ---");
         System.out.println("Name: " + name);
         System.out.println("Phone Number: " + stringPhoneNumber.toString());
         System.out.println("Address: " + address);
         System.out.println("SSN: " + stringSSN.toString());
-        System.out.println("Amount Deposited: $" + getCurrentAmount());
-        
-        System.out.println("\n---Deposit History---");
+
+        System.out.println("\n--- Deposit History ---");
         List<Double> deposits = getDepositHistory();
         List<String> dates = getDepositDates();
-        
-        for(int i = 0; i < deposits.size(); i++)
-        {
-            System.out.printf(" -$%.2f on %s\n", deposits.get(i), dates.get(i));
-        }
-    }
-}
 
-public class FinancialHistory_Test 
-{
-    public static void main(String[] args) 
-    {
-        FinancialHistory fh = new FinancialHistory();
-        Scanner key = new Scanner(System.in);
-        
-        fh.setUserInformation();
-        fh.setCreditAttributes();
-        
-        System.out.println("\nHow much would you like to deposit? ");
-        double dt = key.nextDouble();
-        fh.makeDeposit(dt);
-        
-        fh.printUserInformation();
-        System.out.println("Credit Score: " + fh.calculateCreditScore());
+        for (int i = 0; i < deposits.size(); i++) {
+            System.out.printf(" - $%.2f on %s\n", deposits.get(i), dates.get(i));
+        }
+
+        System.out.printf("Current Balance (from account): $%.2f\n", user.getBalance());
     }
 }
