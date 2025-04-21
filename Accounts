@@ -1,3 +1,5 @@
+package com.mycompany.finalbank;
+
 import java.util.Scanner;
 
 public class Accounts {
@@ -11,166 +13,88 @@ public class Accounts {
     protected String name;
     protected String address;
     protected int zip;
+    private double balance = 0.0; // new shared balance
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
+    public Accounts(String username, String password, int pin_number, String email,
+                    int account_num, int routing_num, String name, String address, int zip) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
-    }
-
-    public int getPin_number() {
-        return pin_number;
-    }
-
-    public void setPin_number(int pin_number) {
         this.pin_number = pin_number;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getAccount_num() {
-        return account_num;
-    }
-
-    public void setAccount_num(int account_num) {
         this.account_num = account_num;
-    }
-
-    public int getRouting_num() {
-        return routing_num;
-    }
-
-    public void setRouting_num(int routing_num) {
         this.routing_num = routing_num;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
         this.address = address;
-    }
-
-    public int getZip() {
-        return zip;
-    }
-
-    public void setZip(int zip) {
         this.zip = zip;
     }
-    
+
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
+    public int getPin_number() { return pin_number; }
+    public String getEmail() { return email; }
+    public int getAccount_num() { return account_num; }
+    public int getRouting_num() { return routing_num; }
+    public String getName() { return name; }
+    public String getAddress() { return address; }
+    public int getZip() { return zip; }
+
+    public double getBalance() { return balance; }
+    public void setBalance(double balance) { this.balance = balance; }
+    public void addToBalance(double amount) { this.balance += amount; }
+    public void subtractFromBalance(double amount) { this.balance -= amount; }
+
     public void changePassword() {
         Scanner scanner = new Scanner(System.in);
-    
-        
         System.out.println("Enter your current password: ");
         String input = scanner.nextLine();
-        String current = this.password;
-        
-       
-        while(!current.equals(input)) //if the input and current password don't match
-        {
-            System.out.println("That is not the correct password. Please try again.");
+
+        while (!password.equals(input)) {
+            System.out.println("That is not the correct password. Try again.");
             input = scanner.nextLine();
         }
-        
+
         System.out.println("Enter your new password: ");
-        String newInput = scanner.nextLine();
-        this.password = newInput;
-        System.out.println("Password successfully changed.");
+        this.password = scanner.nextLine();
+        System.out.println("Password changed.");
     }
-       
-    
-    
+
     public void changePIN() {
         Scanner scanner = new Scanner(System.in);
-    
-        
         System.out.println("Enter your current PIN: ");
         int input = scanner.nextInt();
-        
-        int number = 12345;
-        int digits = String.valueOf(Math.abs(number)).length();
-        
-        while(digits != 4) {
-            System.out.println("The PIN must be 4 digits long.");
+
+        while (input != pin_number) {
+            System.out.println("Incorrect PIN. Try again.");
             input = scanner.nextInt();
         }
-        
-        int current = this.pin_number;
-        
-       
-        while(input != current) //if the input and current password don't match
-        {
-            System.out.println("That is not the correct password. Please try again.");
-            input = scanner.nextInt();
-        }
-        
-        System.out.println("Enter your new PIN: ");
-        int newInput = scanner.nextInt();
-        this.pin_number = newInput;
-        System.out.println("PIN successfully changed.");
-        
+
+        System.out.println("Enter new 4-digit PIN: ");
+        int newPin = scanner.nextInt();
+        this.pin_number = newPin;
+        System.out.println("PIN changed.");
     }
-    
+
     public void changeEmail() {
         Scanner scanner = new Scanner(System.in);
-    
-        
         System.out.println("Enter your current email: ");
         String input = scanner.nextLine();
-        String current = this.email;
-        
-       
-        while(!current.equals(input)) //if the input and current password don't match
-        {
-            System.out.println("That is not the correct email. Please try again.");
+
+        while (!email.equals(input)) {
+            System.out.println("Incorrect email. Try again.");
             input = scanner.nextLine();
         }
-        
+
         System.out.println("Enter your new email: ");
-        String newInput = scanner.nextLine();
-        this.email = newInput;
-        System.out.println("Email successfully changed.");
+        this.email = scanner.nextLine();
+        System.out.println("Email updated.");
     }
 
     public void checkAccount() {
-            
-            System.out.println("Account number is: " + this.account_num);
-            
-    }
-        
-        public void checkRouting() {
-            
-            System.out.println("Routing number is: " + this.routing_num);
-            
+        System.out.println("Account number is: " + account_num);
     }
 
-    
-    
+    public void checkRouting() {
+        System.out.println("Routing number is: " + routing_num);
+    }
 }
+
