@@ -6,34 +6,19 @@ import java.time.format.DateTimeParseException;
 
 public class Transactions 
 { 
-	private float TotalFunds;  
-	private int TransactionNumber;  
-	private String TransactionDate;  
-	private String TransactionType;  
+	private float totalFunds;  
+	private int transactionNumber;  
+	private LocalDate transactionDate;  
+	private String transactionType;  
 
 		  
 	public Transactions(float funds, int number, String date, String type)
 	{ 
-
-		this.TotalFunds = funds;  
-		this.TransactionNumber = number;  
-		this.TransactionDate = date;  
-		this.TransactionType = type;
-	}
-
-	public void generateDate()
-	{
-		LocalDate current = LocalDate.now();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-
-		try
-		{
-			LocalDate now = LocalDate.parse(TransactionDate, format);
-		}
-		catch(DateTimeParseException e)
-		{
-			e.getMessage();
-		}
+		this.transcationDate = LocalDate.parse(date, format);
+		this.totalFunds = funds;  
+		this.transactionNumber = number;  
+		this.transactionType = type;
 	}
  
 	public float getTotalFunds()
@@ -48,7 +33,8 @@ public class Transactions
   
 	public String getTransactionDate()
 	{ 
-		return TransactionDate;
+		DateTimeFormatter format = DateTimeFormatter.foPattern("MM/dd/yyyy");
+		return transactionDate.format(format);
 	}  
 
 	public String getTransactionType()  
@@ -61,11 +47,11 @@ public class main
 {	
 	public static void main (String[] args) 
 	{		
-		Transactions Transaction1 = new Transactions (36.65f, 102, "01-31-2025", "Withdrawal");
-				
-		System.out.println("Funds: $" + Transaction1.getTotalFunds());
-		System.out.println("Transaction ID" + Transaction1.getTransactionNumber());
-		System.out.println("Date: " + Transaction1.gettransactionDate());
-		System.out.println("Type: " + Transaction1.gettransactionType());
+		Transactions transaction1 = new Transactions(36.65f, 102, "01/31/2025", "Withdrawal");
+
+        	System.out.println("Funds: $" + transaction1.getTotalFunds());
+        	System.out.println("Transaction ID: " + transaction1.getTransactionNumber());
+        	System.out.println("Date: " + transaction1.getTransactionDate());
+        	System.out.println("Type: " + transaction1.getTransactionType());
 	}
 }
