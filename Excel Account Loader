@@ -1,0 +1,76 @@
+//Runs Excel File
+package com.mycompany.finalbank;
+
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.*;
+
+public class ExcelAccountLoader {
+
+    public static List<Map<String, String>> loadAccounts(String filePath) {
+        List<Map<String, String>> accounts = new ArrayList<>();
+        try (FileInputStream fis = new FileInputStream(new File(filePath));
+             Workbook workbook = new XSSFWorkbook(fis)) {
+
+            Sheet sheet = workbook.getSheetAt(0);
+            Row headerRow = sheet.getRow(0);
+            int columnCount = headerRow.getPhysicalNumberOfCells();
+
+            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                Row row = sheet.getRow(i);
+                if (row == null) continue;
+
+                Map<String, String> accountData = new HashMap<>();
+
+                for (int j = 0; j < columnCount; j++) {
+                    Cell cell = row.getCell(j);
+                    String key = headerRow.getCell(j).getStringCellValue().trim();
+                    String value = (cell != null) ? cell.toString().trim() : "";
+                    accountData.put(key, value);
+                }
+
+                accounts.add(accountData);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error reading Excel file: " + e.getMessage());
+        }
+
+        return accounts;
+    }
+
+    public static Accounts loginAndLoadAccount(String filePath, String inputUsername, String inputPassword) {
+        List<Map<String, String>> accounts = loadAccounts(filePath);
+
+        for (Map<String, String> account : accounts) {
+            String username = account.get("username");
+            String password = account.get("password");
+
+            if (username != null && password != null &&
+                username.equalsIgnoreCase(inputUsername) &&
+                password.equals(inputPassword)) {
+
+                try {
+                    return new Accounts(
+                        username,
+                        password,
+                        Integer.parseInt(account.get("pin").split("\\.")[0]),
+                        account.get("email"),
+                        (int) Double.parseDouble(account.get("acc#")),
+                        (int) Double.parseDouble(account.get("rout#")),
+                        account.get("Name"),
+                        account.get("address"),
+                        (int) Double.parseDouble(account.get("zip"))
+                    );
+                } catch (Exception e) {
+                    System.out.println("Error parsing account row: " + e.getMessage());
+                    return null;
+                }
+            }
+        }
+
+        return null;
+    }
+}
