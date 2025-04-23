@@ -1,109 +1,156 @@
 //This code will handle the user interface with a GUI
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import java.awt.event.ActionListener;
+public class UserInterface {
 
-class UI implements ActionListener
-{
-  private JFrame frame;
+    public static void displayMenu(Accounts user) {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
 
-  private JPanel mainPanel;
-  private JPanel mainMenuPanel;
-  private JPanel userPanel;
-  private JPanel adminPanel;
+        do {
+            System.out.println("\n===== FinalBank Menu =====");
+            System.out.println("1. View Account Info");
+            System.out.println("2. Make a Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Transfer Funds");
+            System.out.println("5. View Transaction History");
+            System.out.println("6. View Financial History");
+            System.out.println("7. Set Appointment");
+            System.out.println("8. Apply for Credit Card");
+            System.out.println("9. Generate Account Report");
+            System.out.println("10. Change Password");
+            System.out.println("11. Change PIN");
+            System.out.println("12. Change Email");
+            System.out.println("13. View Account & Routing Numbers");
+            System.out.println("14. View Financial Advisor Info");
+            System.out.println("15. Logout");
+            System.out.print("Enter your choice: ");
 
-  private JButton userButton;
-  private JButton adminButton;
+            while (!scanner.hasNextInt()) {
+                System.out.print("Please enter a valid number: ");
+                scanner.next();
+            }
+            choice = scanner.nextInt();
+            scanner.nextLine();
 
-  private CardLayout layout;
-
-  UI()
-  {
-    frame = new JFrame("Bank System");
-    frame.setSize(400,300);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    layout = new CardLayout();
-    mainPanel = new JPanel(layout);
-
-    displayMainMenu();
-    displayUserMenu();
-    displayAdminMenu();
-    displayTransactionsMenu();
-
-    mainPanel.add(mainMenuPanel, "Main Menu");
-    mainPanel.add(userPanel, "User");
-    mainPanel.add(adminPanel, "Administrator");
-
-    frame.add(mainPanel);
-    frame.setVisible(true);
-  }
-
-  void displayMainMenu() 
-  {
-    mainMenuPanel = new JPanel();
-
-    mainMenuPanel.setSize(400,300);
-
-    userButton = new JButton("User");
-    userButton.setBounds(10,80,80,25);
-    userButton.addActionListener(this);
-    mainMenuPanel.add(userButton);
-    
-    adminButton = new JButton("Administrator");
-    adminButton.setBounds(10,160,80,50);
-    adminButton.addActionListener(this);
-    mainMenuPanel.add(adminButton);
-  }
-
-  void displayUserMenu() 
-  {
-      userPanel = new JPanel();
-      userPanel.add(new JLabel("Welcome User!"));
-      JButton back = new JButton("Back");
-
-      back.addActionListener(e -> layout.show(mainPanel, "Main Menu"));
-      userPanel.add(back);
-  }
-
-  void displayAdminMenu() 
-  {
-      adminPanel = new JPanel();
-      adminPanel.add(new JLabel("Welcome Administrator!"));
-      JButton back = new JButton("Back");
-      
-      back.addActionListener(e -> layout.show(mainPanel, "Main Menu"));
-      adminPanel.add(back);
-  }
-
-  void displayTransactionsMenu() 
-  {
-  }
-
-  @Override
-  public void actionPerformed(ActionEvent e)
-  {
-    if(e.getSource() == userButton)
-    {
-      layout.show(mainPanel, "User");
-    }
-    else if (e.getSource() == adminButton)
-    {
-      layout.show(mainPanel, "Administrator");
-    }
-  }
-}
-
-public class UI_Test 
-{
-    public static void main(String[] args) 
-    {
-       new UI();
+            switch (choice) {
+                case 1:
+                    // View Account Info
+                    System.out.println("\n--- Account Info ---");
+                    System.out.println("Name       : " + user.getName());
+                    System.out.println("Username   : " + user.getUsername());
+                    System.out.println("Email      : " + user.getEmail());
+                    System.out.println("Account #  : " + user.getAccount_num());
+                    System.out.println("Routing #  : " + user.getRouting_num());
+                    System.out.println("Address    : " + user.getAddress());
+                    System.out.println("Zip Code   : " + user.getZip());
+                    System.out.printf("Balance    : $%.2f%n", user.getBalance());
+                    break;
+                case 2:
+                    // Make a Deposit
+                    System.out.print("Enter amount to deposit: ");
+                    double depAmt = scanner.nextDouble(); scanner.nextLine();
+                    new Deposit().makeDeposit(depAmt, user);
+                    System.out.printf("✅ New Balance: $%.2f%n", user.getBalance());
+                    break;
+                case 3:
+                    // Withdraw
+                    System.out.print("Enter amount to withdraw: ");
+                    double wAmt = scanner.nextDouble(); scanner.nextLine();
+                    new Withdrawal().makeWithdrawal(wAmt, user);
+                    System.out.printf("✅ New Balance: $%.2f%n", user.getBalance());
+                    break;
+                case 4:
+                    // Transfer Funds
+                    System.out.print("Enter recipient username: ");
+                    String recipientUsername = scanner.nextLine().trim();
+                    Accounts recipient = ExcelAccountLoader.loadAccountByUsername("Accounts.xlsx", recipientUsername);
+                    if (recipient == null) {
+                        System.out.println("Recipient not found.");
+                    } else {
+                        System.out.print("Enter amount to transfer: ");
+                        double tAmt = scanner.nextDouble(); scanner.nextLine();
+                        try {
+                            TransferFunds tf = new TransferFunds();
+                            tf.transferFunds(user, recipient, tAmt);
+                            System.out.println("✅ Transfer successful. Transfer ID: " + tf.getTransferID());
+                            System.out.printf("   Your new balance: $%.2f%n", user.getBalance());
+                        } catch (IllegalArgumentException ex) {
+                            System.out.println("Error: " + ex.getMessage());
+                        }
+                    }
+                    break;
+                case 5:
+                    // View Transaction History
+                    System.out.println("\n--- Transaction History ---");
+                    for (Transaction txn : user.getTransactions()) {
+                        System.out.println(txn);
+                    }
+                    break;
+                case 6:
+                    // View Financial History
+                    FinancialHistory fh = new FinancialHistory();
+                    fh.setUserInformation();
+                    fh.setCreditAttributes();
+                    fh.printUserInformation(user);
+                    System.out.println("Credit Score: " + fh.calculateCreditScore());
+                    break;
+                case 7:
+                    // Set Appointment
+                    System.out.print("Enter appointment date (MM/dd/yyyy): ");
+                    String date = scanner.nextLine().trim();
+                    System.out.print("Enter appointment time (hh:mm AM/PM): ");
+                    String time = scanner.nextLine().trim();
+                    Appointment appt = new Appointment();
+                    System.out.println(appt.scheduleAppointment(date, time));
+                    break;
+                case 8:
+                    // Apply for Credit Card
+                    CardApplication app = new CardApplication();
+                    app.cardAppMenu();
+                    System.out.print("Enter Application SSN: ");
+                    int ssn = scanner.nextInt(); scanner.nextLine();
+                    app.setAppSSN(ssn);
+                    CreditCard card = new CreditCard();
+                    card.generateCardNumber();
+                    card.generateExpirationDate();
+                    card.generateCVV();
+                    card.startingBalance();
+                    break;
+                case 9:
+                    // Generate Account Report
+                    PrintReport report = new PrintReport();
+                    report.generateReport();
+                    break;
+                case 10:
+                    // Change Password
+                    user.changePassword();
+                    break;
+                case 11:
+                    // Change PIN
+                    user.changePIN();
+                    break;
+                case 12:
+                    // Change Email
+                    user.changeEmail();
+                    break;
+                case 13:
+                    // View Account & Routing Numbers
+                    user.checkAccount();
+                    user.checkRouting();
+                    break;
+                case 14:
+                    // View Financial Advisor Info
+                    Employee advisor = new Employee();
+                    advisor.setEmployeeName();
+                    advisor.setEmployeeID();
+                    advisor.setCustomerID();
+                    break;
+                case 15:
+                    // Logout
+                    System.out.println(" Logging out...");
+                    break;
+                default:
+                    System.out.println(" Invalid option. Please try again.");
+            }
+        } while (choice != 15);
     }
 }
