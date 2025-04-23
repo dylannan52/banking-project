@@ -2,59 +2,52 @@
 import java.util.Random;
 import java.util.Scanner;
 
-class Employee
-{
+//Represents a financial advisor (employee) and associated IDs.
+public class Employee {
     protected int[] employeeID;
+    protected int[] customerID;
     private String employeeName;
     private Random rand;
 
-    Employee()
-    {
+    public Employee() {
         rand = new Random();
         employeeID = new int[6];
+        customerID = new int[6];
         employeeName = "";
     }
 
-    void setEmployeeID()
-    {
-        employeeID[0] = 1;
-        StringBuilder stringEmployeeID = new StringBuilder();
+    // Prompt for and set the advisor's name.
+    public void setEmployeeName() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter advisor name: ");
+        employeeName = scanner.nextLine().trim();
+        System.out.println("Advisor Name: " + employeeName);
+    }
 
-        for(int i = 1; i < employeeID.length; i++)
-        {
+    //Generate and display a random 6-digit advisor ID.
+    public void setEmployeeID() {
+        employeeID[0] = 1;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i < employeeID.length; i++) {
             employeeID[i] = rand.nextInt(10);
         }
-
-        for(int i = 0; i < employeeID.length; i++)
-        {
-            stringEmployeeID.append(employeeID[i]);
-            if((i + 1) % 6 == 0 && i != employeeID.length - 1)
-            {
-                stringEmployeeID.append("");
-            }
+        for (int digit : employeeID) {
+            sb.append(digit);
         }
-        System.out.println("Employee ID: " + stringEmployeeID.toString());
+        System.out.println("Advisor ID: " + sb.toString());
     }
-    
-    void setEmployeeName()
-    {
-        String name;
-        Scanner keyboard = new Scanner(System.in);
-        
-        System.out.print("Enter your name: ");
-        name = keyboard.nextLine();
-        
-        System.out.println("Employee Name: " + name);
+
+    //Generate and display a random 6-digit customer ID for the advisor.
+    public void setCustomerID() {
+        customerID[0] = 1;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i < customerID.length; i++) {
+            customerID[i] = rand.nextInt(10);
+        }
+        for (int digit : customerID) {
+            sb.append(digit);
+        }
+        System.out.println("Customer ID: " + sb.toString());
     }
 }
 
-public class FinancialAdvisorTest
-{
-  public static void main(String[] args)
-  {
-      Employee e = new Employee();
-      
-      e.setEmployeeName();
-      e.setEmployeeID();
-  }
-}
