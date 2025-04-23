@@ -1,57 +1,26 @@
 //this class must be reviewed
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
-public class Transactions 
-{ 
-	private float totalFunds;  
-	private int transactionNumber;  
-	private LocalDate transactionDate;  
-	private String transactionType;  
+public class Transaction {
+    public enum Type { DEPOSIT, WITHDRAWAL, TRANSFER_OUT, TRANSFER_IN }
 
-		  
-	public Transactions(float funds, int number, String date, String type)
-	{ 
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-		this.transcationDate = LocalDate.parse(date, format);
-		this.totalFunds = funds;  
-		this.transactionNumber = number;  
-		this.transactionType = type;
-	}
- 
-	public float getTotalFunds()
-	{  	
-		return TotalFunds;
-	}
+    private final LocalDateTime timestamp;
+    private final Type type;
+    private final double amount;
+    private final String details;
 
-	public int getTransactionNumber() 
-	{  
-		return TransactionNumber;
-	}  
-  
-	public String getTransactionDate()
-	{ 
-		DateTimeFormatter format = DateTimeFormatter.foPattern("MM/dd/yyyy");
-		return transactionDate.format(format);
-	}  
+    public Transaction(Type type, double amount, String details) {
+        this.timestamp = LocalDateTime.now();
+        this.type = type;
+        this.amount = amount;
+        this.details = details;
+    }
 
-	public String getTransactionType()  
-	{  
-		return TransactionType;
-	}
-}
-
-public class main 
-{	
-	public static void main (String[] args) 
-	{		
-		Transactions transaction1 = new Transactions(36.65f, 102, "01/31/2025", "Withdrawal");
-
-        	System.out.println("Funds: $" + transaction1.getTotalFunds());
-        	System.out.println("Transaction ID: " + transaction1.getTransactionNumber());
-        	System.out.println("Date: " + transaction1.getTransactionDate());
-        	System.out.println("Type: " + transaction1.getTransactionType());
-	}
+    @Override
+    public String toString() {
+        String ts = timestamp.format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"));
+        return String.format("[%s] %-12s $%8.2f  %s", ts, type, amount, details);
+    }
 }
