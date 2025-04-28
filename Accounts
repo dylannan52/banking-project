@@ -1,39 +1,52 @@
 package com.mycompany.finalbank;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
+//Represents a user account with balance and transaction history.
 public class Accounts {
-    
     private String username;
     private String password;
     private int pin_number;
     private String email;
-    protected int account_num;
-    protected int routing_num;
+    protected long account_num;
+    protected long routing_num;
     protected String name;
     protected String address;
     protected int zip;
-    private double balance = 0.0; // new shared balance
+    private double balance = 0.0;
 
-    public Accounts(String username, String password, int pin_number, String email,
-                    int account_num, int routing_num, String name, String address, int zip) {
-        this.username = username;
-        this.password = password;
-        this.pin_number = pin_number;
-        this.email = email;
+    // Ledger for transaction history
+    private List<Transaction> ledger = new ArrayList<>();
+
+    public Accounts(String username,
+                    String password,
+                    int pin_number,
+                    String email,
+                    long account_num,
+                    long routing_num,
+                    String name,
+                    String address,
+                    int zip) {
+        this.username    = username;
+        this.password    = password;
+        this.pin_number  = pin_number;
+        this.email       = email;
         this.account_num = account_num;
         this.routing_num = routing_num;
-        this.name = name;
-        this.address = address;
-        this.zip = zip;
+        this.name        = name;
+        this.address     = address;
+        this.zip         = zip;
     }
 
     public String getUsername() { return username; }
     public String getPassword() { return password; }
     public int getPin_number() { return pin_number; }
     public String getEmail() { return email; }
-    public int getAccount_num() { return account_num; }
-    public int getRouting_num() { return routing_num; }
+    public long getAccount_num() { return account_num; }
+    public long getRouting_num() { return routing_num; }
     public String getName() { return name; }
     public String getAddress() { return address; }
     public int getZip() { return zip; }
@@ -43,58 +56,91 @@ public class Accounts {
     public void addToBalance(double amount) { this.balance += amount; }
     public void subtractFromBalance(double amount) { this.balance -= amount; }
 
+    /** Record a transaction in this account's history. */
+    public void addTransaction(Transaction txn) {
+        ledger.add(txn);
+    }
+
+    public List<Transaction> getTransactions() {
+        return Collections.unmodifiableList(ledger);
+    }
+
+    
     public void changePassword() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your current password: ");
-        String input = scanner.nextLine();
-
-        while (!password.equals(input)) {
-            System.out.println("That is not the correct password. Try again.");
-            input = scanner.nextLine();
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter current password: ");
+        String current = sc.nextLine().trim();
+        if (!current.equals(password)) {
+            System.out.println("Incorrect current password.");
+            return;
         }
-
-        System.out.println("Enter your new password: ");
-        this.password = scanner.nextLine();
-        System.out.println("Password changed.");
+        System.out.print("Enter new password: ");
+        String newPass = sc.nextLine().trim();
+        System.out.print("Confirm new password: ");
+        String confirm = sc.nextLine().trim();
+        if (!newPass.equals(confirm)) {
+            System.out.println("Passwords do not match. Password not changed.");
+            return;
+        }
+        this.password = newPass;
+        System.out.println("Password changed successfully.");
     }
 
+    
     public void changePIN() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your current PIN: ");
-        int input = scanner.nextInt();
-
-        while (input != pin_number) {
-            System.out.println("Incorrect PIN. Try again.");
-            input = scanner.nextInt();
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter current PIN: ");
+        String oldPinStr = sc.nextLine().trim();
+        try {
+            int oldPin = Integer.parseInt(oldPinStr);
+            if (oldPin != pin_number) {
+                System.out.println("Incorrect current PIN.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid PIN format.");
+            return;
         }
-
-        System.out.println("Enter new 4-digit PIN: ");
-        int newPin = scanner.nextInt();
-        this.pin_number = newPin;
-        System.out.println("PIN changed.");
+        System.out.print("Enter new PIN: ");
+        String newPinStr = sc.nextLine().trim();
+        System.out.print("Confirm new PIN: ");
+        String confirmStr = sc.nextLine().trim();
+        if (!newPinStr.equals(confirmStr)) {
+            System.out.println("PIN entries do not match. PIN not changed.");
+            return;
+        }
+        try {
+            this.pin_number = Integer.parseInt(newPinStr);
+            System.out.println("PIN changed successfully.");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid new PIN format. PIN not changed.");
+        }
     }
 
+    
     public void changeEmail() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your current email: ");
-        String input = scanner.nextLine();
-
-        while (!email.equals(input)) {
-            System.out.println("Incorrect email. Try again.");
-            input = scanner.nextLine();
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter new email address: ");
+        String newEmail = sc.nextLine().trim();
+        System.out.print("Confirm new email: ");
+        String confirm = sc.nextLine().trim();
+        if (!newEmail.equalsIgnoreCase(confirm)) {
+            System.out.println("Email entries do not match. Email not changed.");
+            return;
         }
-
-        System.out.println("Enter your new email: ");
-        this.email = scanner.nextLine();
-        System.out.println("Email updated.");
+        this.email = newEmail;
+        System.out.println("Email changed successfully to " + this.email);
     }
 
+    /** Prints the account number. */
     public void checkAccount() {
         System.out.println("Account number is: " + account_num);
     }
 
+    /** Prints the routing number. */
     public void checkRouting() {
         System.out.println("Routing number is: " + routing_num);
     }
 }
+
 
