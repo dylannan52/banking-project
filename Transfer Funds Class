@@ -2,10 +2,7 @@
 
 package com.mycompany.finalbank;
 
-import java.util.Scanner;
-
 public class TransferFunds {
-
     private int transferID;
     private static int nextTransferID = 1;
 
@@ -13,31 +10,24 @@ public class TransferFunds {
         this.transferID = nextTransferID++;
     }
 
-    public void transfer(Accounts user) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter recipient username (simulated): ");
-        String recipientUsername = scanner.nextLine();
-
-        System.out.print("Enter amount to transfer: ");
-        double amount = scanner.nextDouble();
-
+    public void transferFunds(Accounts from, Accounts to, double amount) {
         if (amount <= 0) {
-            System.out.println(" Amount must be greater than zero.");
-            return;
+            throw new IllegalArgumentException("Amount must be greater than zero.");
         }
-
-        if (amount > user.getBalance()) {
-            System.out.println(" Amount exceeds available balance.");
-            return;
+        if (amount > from.getBalance()) {
+            throw new IllegalArgumentException("Amount exceeds available balance.");
         }
-
-        // Simulate the transfer
-        user.subtractFromBalance(amount);
-        System.out.println("✅ Transfer successful.");
-        System.out.println("Amount: $" + amount);
-        System.out.println("Recipient: " + recipientUsername);
-        System.out.println("Transfer ID: " + transferID);
+        // Perform transfer
+        from.subtractFromBalance(amount);
+        to.addToBalance(amount);
+        // Record outgoing transaction
+        Transaction outTxn = new Transaction(Transaction.Type.TRANSFER_OUT, amount,
+            "To: " + to.getUsername() + " (Transfer ID: " + transferID + ")");
+        from.addTransaction(outTxn);
+        // Record incoming transaction
+        Transaction inTxn = new Transaction(Transaction.Type.TRANSFER_IN, amount,
+            "From: " + from.getUsername() + " (Transfer ID: " + transferID + ")");
+        to.addTransaction(inTxn);
     }
 
     public int getTransferID() {
