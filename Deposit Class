@@ -1,10 +1,10 @@
 //This class needs to be ran with 'Financial History' class
 package com.mycompany.finalbank;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.time.LocalDate;
+import java.util.Random;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Deposit {
     protected double depositAmount;
@@ -14,17 +14,18 @@ public class Deposit {
     private List<Double> depositHistory = new ArrayList<>();
     private List<String> depositDates = new ArrayList<>();
 
+    public Deposit() {
+        rand = new Random();
+    }
+
     public void generateID() {
         DepositID = new int[9];
-        rand = new Random();
-
         for (int i = 0; i < DepositID.length; i++) {
             DepositID[i] = rand.nextInt(10);
         }
-
         stringDepositID.setLength(0);
-        for (int i = 0; i < DepositID.length; i++) {
-            stringDepositID.append(DepositID[i]);
+        for (int digit : DepositID) {
+            stringDepositID.append(digit);
         }
     }
 
@@ -38,12 +39,15 @@ public class Deposit {
 
     public void makeDeposit(double deposit, Accounts user) {
         if (validateAmount(deposit)) {
-            depositAmount += deposit;
-            user.addToBalance(deposit); // apply to account
+            depositAmount = deposit;
+            user.addToBalance(deposit);
             generateID();
             depositHistory.add(deposit);
             depositDates.add(LocalDate.now().toString());
-            System.out.println("✅ $" + deposit + " deposited successfully.");
+            // Record transaction
+            Transaction txn = new Transaction(Transaction.Type.DEPOSIT, deposit, "Deposit ID: " + getID());
+            user.addTransaction(txn);
+            System.out.println("✅ $" + deposit + " deposited successfully. ID: " + getID());
         } else {
             System.out.println(" Deposit amount must be greater than 0.");
         }
