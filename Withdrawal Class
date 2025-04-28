@@ -6,14 +6,19 @@ public class Withdrawal {
     private double withdrawalAmount;
 
     public void makeWithdrawal(double amount, Accounts user) {
-        if (amount > user.getBalance()) {
-            System.out.println("Amount indicated exceeds amount available.");
-        } else if (amount <= 0) {
-            System.out.println("Withdrawal must be greater than zero.");
-        } else {
-            withdrawalAmount = amount;
-            user.subtractFromBalance(withdrawalAmount);
-            System.out.println(" $" + withdrawalAmount + " withdrawn successfully.");
+        if (amount <= 0) {
+            System.out.println("❌ Withdrawal must be greater than zero.");
+            return;
         }
+        if (amount > user.getBalance()) {
+            System.out.println("❌ Amount indicated exceeds amount available.");
+            return;
+        }
+        withdrawalAmount = amount;
+        user.subtractFromBalance(amount);
+        // Record transaction
+        Transaction txn = new Transaction(Transaction.Type.WITHDRAWAL, amount, "Withdrawal");
+        user.addTransaction(txn);
+        System.out.println("✅ $" + amount + " withdrawn successfully.");
     }
 }
