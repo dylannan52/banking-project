@@ -59,6 +59,7 @@ Run the project
 Note: If you're using an IDE, you can simply open the project and run Main.java.
 
 📦 Project Structure
+
 /src
   /bank
     - Account.java
@@ -83,6 +84,7 @@ Password hashing and security improvements
 Unit tests and input validation
 
 👥 Authors
+
 Dylan Nanthavongdouangsy | dylannan52@gmail.com
 
 Vicedany Valle | vicedanyvalle@yahoo.com
