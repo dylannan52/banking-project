@@ -51,9 +51,9 @@ A simple console-based banking system built in Java that allows users to create 
    git clone https://github.com/dylannan52/banking-project.git
    cd banking-project
 2. **Compile the project**
-
-javac Main.java
-Run the project
+    ```bash
+    javac Main.java
+    Run the project
 
 
 Note: If you're using an IDE, you can simply open the project and run Main.java.
@@ -61,15 +61,25 @@ Note: If you're using an IDE, you can simply open the project and run Main.java.
 📦 Project Structure
 
 /src
-  /bank
-    - Account.java
-    - User.java
-    - TransactionManager.java
-  - Main.java
-/database
-  - accounts.xlsx
-/gui (WIP)
-  - MainGUI.java
+  Accounts.java
+  AppointmentClass_JOptionPane.java
+  AppointmentClass_Scanner.java
+  CalculateFundsClass.java
+  CardApplicationClass.java
+  CreditCardClass.java
+  DepositClass.java
+  ExcelAccountLoader.java
+  FinancialAdvisorClass.java
+  FinancialHistoryClass.java
+  JavaLoginScreenExample.java
+  PrintReportClass.java
+  TransactionsClass.java
+  TransferFundsClass.java
+  UserInterfaceClass.java
+  WithdrawalClass.java
+  createPassword.java
+  test.java
+README.md
 
 
 🧠 Future Improvements
