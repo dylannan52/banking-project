@@ -99,7 +99,7 @@ Dylan Nanthavongdouangsy | dylannan52@gmail.com
 
 Vicedany Valle | vicedanyvalle@yahoo.com
 
-Jose Hernandez | josehernandez60@gmail.com
+Jose Hernandez | hernandezjose2514@gmail.com
 
 Abel Ulloa | aulloaj88@gmail.com
 
